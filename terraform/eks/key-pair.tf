@@ -1,0 +1,4 @@
+resource "aws_key_pair" "deleteit" {
+  key_name   = var.key_pair_name
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7YFgPz8yGCZhzgaTVbsghkvVVMSdm3cflN8brGhjIw5u2aOPMMN+Nna6cDiT17b1mkw9SXMocpNy3CqZY0k2xzVNQ64BL6qzN7M5JNt5c9nFUknWbMZd+rf+V34VQm90Eqw70ugxEU1z2lrcxCCNv6R1+N7PR9jwHoa1wg2M0rUiD109tg0cRHL2riPl9u2k4yEYVOxLix5qfZ5Bseyy5wrj6BJZOid/VS6T++9PRAvZpk53nCgyYrRXLjFDbX/JmN/A+M1sh0xDkdfbgWX9yceaEPQUUYRYlA/9XCOiz0HqC1L7l+rnvYGFDYH1w4V82R8EPgHwIDgp9CXXr4Yi1 davidhsu@Davids-MacBook-Pro.local"
+}
