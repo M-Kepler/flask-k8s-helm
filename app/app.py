@@ -37,3 +37,7 @@ def hello():
 def secret_view():
     count = get_hit_count()
     return os.environ['THEBIGSECRET']+ '\n'
+
+@app.route('/health')
+def health_check():
+    return {'status': 'ok', 'version': os.environ['DEPLOY_VERSION']}
