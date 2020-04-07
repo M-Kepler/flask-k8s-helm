@@ -17,6 +17,18 @@ make update
 ```
  
 
+## Access Kubernetes
+
+```bash
+
+## Use AWS CLI to update your kubeconfig to access this EKS cluster.
+aws eks --region eu-west-2 update-kubeconfig --name demo-cluster 
+
+## Test if it works.
+kubectl get node
+
+```
+
 ## Providers
 
 | Name | Version |
