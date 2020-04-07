@@ -1,3 +1,22 @@
+## How To
+
+```bash
+
+## Initiate Terraform, only execute when you're first time running this.
+make init
+
+## Plan will show the result about what's gonna change.
+make plan
+
+## Apply will deploy to online environment which base on your plan result.
+make apply
+
+## If you changed the Terraform modules, please run update to fetch the newest module.
+make update
+
+```
+ 
+
 ## Providers
 
 | Name | Version |

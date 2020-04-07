@@ -3,24 +3,18 @@
 ```bash
 
 ## Initiate Terraform, only execute when you're first time running this.
-aws-vault exec deleteit -- make init
+make init
 
 ## Plan will show the result about what's gonna change.
-aws-vault exec deleteit -- make plan
+make plan
 
 ## Apply will deploy to online environment which base on your plan result.
-aws-vault exec deleteit -- make apply
+make apply
 
 ## If you changed the Terraform modules, please run update to fetch the newest module.
-aws-vault exec deleteit -- make update
+make update
 
 ```
-
-
-## State
-
-The state of this project will store in `terraform.tfstate` this file, and Terraform will 
-do every changes base on this state file. So, DO NOT CHANGE IT MANUALLY! 
 
 
 ## Providers
