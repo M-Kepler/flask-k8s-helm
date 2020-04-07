@@ -4,13 +4,13 @@
 
 resource "aws_iam_policy" "alb_ingress" {
     name = "ALBIngressControllerIAMPolicy"
-    policy = file("${path.module}/../policy/alb_ingress_policy_v1.1.6.json")
+    policy = file("${path.module}/policy/alb_ingress_policy_v1.1.6.json")
 }
 
 
 resource "aws_iam_role" "alb_ingress" {
   name               = "${var.cluster_name}-eks-alb-ingress-controller"
-  assume_role_policy = templatefile("${path.module}/../policy/oidc_assume_role_policy.json", 
+  assume_role_policy = templatefile("${path.module}/policy/oidc_assume_role_policy.json",
     { 
       OIDC_ARN = aws_iam_openid_connect_provider.oidc_provider.arn, 
       OIDC_URL = replace(aws_iam_openid_connect_provider.oidc_provider.url, "https://", ""), 

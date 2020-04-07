@@ -5,7 +5,7 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket = "terraform-states"
+    bucket = "terraform-deleteit"
     key    = "eks/terraform.tfstate"
     region = "eu-west-2"
   }
@@ -16,7 +16,7 @@ data "terraform_remote_state" "vpc" {
   backend = "s3"
 
   config = {
-    bucket = "terraform-states"
+    bucket = "terraform-deleteit"
     key    = "vpc/terraform.tfstate"
     region = "eu-west-2"
   }
