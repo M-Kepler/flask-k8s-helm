@@ -22,8 +22,5 @@ secrets:
   thebigsecret:
     key: THEBIGSECRET
 
-ingress:
-  allowIP: "0.0.0.0/0"
-
 
 
