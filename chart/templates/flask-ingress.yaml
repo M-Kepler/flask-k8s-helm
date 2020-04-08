@@ -14,7 +14,7 @@ spec:
   rules:
     - http:
         paths:
-          - path: /*
+          - path: /
             backend:
               serviceName: {{ .Release.Name }}-flask
               servicePort: 80
