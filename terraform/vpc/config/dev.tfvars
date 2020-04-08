@@ -20,4 +20,4 @@ app_subnet_tags = {
     "kubernetes.io/cluster/demo-cluster" = "shared"
 }
 
-office_ip = ["61.220.65.15/32", "61.220.65.13/32"]
+office_ip = ["0.0.0.0/0"]
