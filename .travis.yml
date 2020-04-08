@@ -28,7 +28,8 @@ install:
   - terraform -v
 
 before_script:
-  - cd terraform/eks && make init && make plan && make apply
+  - cd terraform/vpc && make init && make plan && make apply && cd ../../
+  - cd terraform/eks && make init && make plan && make apply && cd ../../
   - aws eks --region eu-west-2 update-kubeconfig --name demo-cluster
 
 script:
