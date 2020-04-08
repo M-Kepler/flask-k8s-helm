@@ -7,19 +7,19 @@ This is a Helm 3.0 Chart for deploy a Flask application and Redis.
 ## Pre-install result.
 helm install app --dry-run --debug . \
  --set secrets.username.value=$USERNAME \
- --set secrets.password.valu=$PASSWORD \
+ --set secrets.password.value=$PASSWORD \
  --set secrets.thebigsecret.value=$BIGSECRET
 
 ## Install to online Kubernetes cluster.
 helm install app . \
  --set secrets.username.value=$USERNAME \
- --set secrets.password.valu=$PASSWORD \
+ --set secrets.password.value=$PASSWORD \
  --set secrets.thebigsecret.value=$BIGSECRET
 
 ## Upgrade the Chart with new version.
 helm upgrade app . \
  --set secrets.username.value=$USERNAME \
- --set secrets.password.valu=$PASSWORD \
+ --set secrets.password.value=$PASSWORD \
  --set secrets.thebigsecret.value=$BIGSECRET
 
 ```

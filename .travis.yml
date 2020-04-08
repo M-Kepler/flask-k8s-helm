@@ -41,6 +41,6 @@ script:
     --set deployment.flask.image.repository=$ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com/flask-app
     --set deployment.flask.image.tag=$DEPLOY_VERSION
     --set secrets.username.value=$USERNAME
-    --set secrets.password.valu=$PASSWORD
+    --set secrets.password.value=$PASSWORD
     --set secrets.thebigsecret.value=$BIGSECRET
   - echo "Deployed."
