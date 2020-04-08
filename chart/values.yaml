@@ -1,0 +1,23 @@
+namespace: demo
+
+deployment:
+  redis:
+    replicaCount: 1
+    port: 6379
+  flask:
+    replicaCount: 1
+    image:
+      repository: davidh83110/flask-test
+      tag: latest
+    health_path: /health
+  
+secrets:
+  username:
+    key: USERNAME
+  password:
+    key: PASSWORD
+  thebigsecret:
+    key: THEBIGSECRET
+
+
+
