@@ -37,10 +37,10 @@ script:
   - docker tag flask-app:latest $ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com/flask-app:$DEPLOY_VERSION
   - $(aws ecr get-login --no-include-email --region eu-west-2)
   - docker push $ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com/flask-app:$DEPLOY_VERSION
-  - helm upgrade app ./chart\
-    --set deployment.flask.image.repository=$ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com/flask-app\
-    --set deployment.flask.image.tag=$DEPLOY_VERSION\
-    --set secrets.username.value=$USERNAME\
-    --set secrets.password.valu=$PASSWORD\
+  - helm upgrade app ./chart
+    --set deployment.flask.image.repository=$ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com/flask-app
+    --set deployment.flask.image.tag=$DEPLOY_VERSION
+    --set secrets.username.value=$USERNAME
+    --set secrets.password.valu=$PASSWORD
     --set secrets.thebigsecret.value=$BIGSECRET
   - echo "Deployed."
