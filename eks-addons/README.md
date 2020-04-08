@@ -1,6 +1,7 @@
 ## EKS Add-ONs
 
 There are some add-ons for EKS that would be useful and they are also some simple ansible playbooks. 
+Please run playbooks manually, which means they won't include on the CI/CD pipeline. 
 
 
 ## Metrics Server & Kubernetes-Dashboard
