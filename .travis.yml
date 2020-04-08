@@ -33,9 +33,9 @@ before_script:
 
 script:
   - docker build -t flask ./app
-#  - docker tag flask-app :$TRAVIS_COMMIT
-#  - $(aws ecr get-login --no-include-email --region eu-west-2)
-#  - docker push xxxx:$TRAVIS_COMMIT
+  - docker tag flask-app $ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com/flask-app:$DEPLOY_VERSION
+  - $(aws ecr get-login --no-include-email --region eu-west-2)
+  - docker push $ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com/flask-app:$DEPLOY_VERSION
 #  - helm upgrade app ./chart --dry-run --debug --set xxxxx
 #  - helm upgrade app ./chart
 
