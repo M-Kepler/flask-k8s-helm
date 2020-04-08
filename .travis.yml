@@ -22,6 +22,10 @@ install:
   - curl -o aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.14.6/2019-08-22/bin/linux/amd64/aws-iam-authenticator
   - chmod +x ./aws-iam-authenticator && mkdir -p $HOME/bin && cp ./aws-iam-authenticator $HOME/bin/aws-iam-authenticator && export PATH=$PATH:$HOME/bin && echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
   - aws-iam-authenticator help
+  - wget https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip
+  - sudo unzip terraform_0.12.24_linux_amd64.zip -d /tmp/terraform_install
+  - export PATH=$PATH:/tmp/terraform_install
+  - terraform -v
 
 before_script:
   - cd terraform/eks && make init && make plan && make apply
@@ -29,8 +33,8 @@ before_script:
 
 script:
   - docker build -t flask ./app
-#  - docker tag flask xxxx:$TRAVIS_COMMIT
-#  - $(aws ecr get-login --no-email)
+#  - docker tag flask-app :$TRAVIS_COMMIT
+#  - $(aws ecr get-login --no-include-email --region eu-west-2)
 #  - docker push xxxx:$TRAVIS_COMMIT
 #  - helm upgrade app ./chart --dry-run --debug --set xxxxx
 #  - helm upgrade app ./chart
