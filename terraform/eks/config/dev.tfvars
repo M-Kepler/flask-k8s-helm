@@ -8,7 +8,7 @@ kubernetes_version = "1.15"
 enabled_cluster_log_types = ["api"]
 endpoint_private_access = "true"
 endpoint_public_access = "true"
-public_access_cidrs = [ "61.220.65.15/32" ]
+public_access_cidrs = [ "0.0.0.0/0" ]
 
 
 ## EKS Node Group

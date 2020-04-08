@@ -23,7 +23,7 @@ secrets:
     key: THEBIGSECRET
 
 ingress:
-  allowIP: "61.220.65.15/32"
+  allowIP: "0.0.0.0/0"
 
 
 
