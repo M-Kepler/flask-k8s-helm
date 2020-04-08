@@ -127,6 +127,10 @@ I added a health page for the Flask application which is `/health`, it will retu
 All of the details are in `.travis.yml`.
 
 
+## Bastion
+SSH with keychain to bastion instance to access the internal resources.
+
+
 ## How to start locally
 docker-compose up
 
