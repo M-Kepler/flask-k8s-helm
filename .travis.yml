@@ -1,0 +1,46 @@
+language: python
+
+dist: xenial
+services: docker
+#branches:
+#  only:
+#    - master
+
+env:
+  global:
+    - DEPLOY_VERSION=`echo $TRAVIS_COMMIT | cut -c1-7`
+
+install:
+  - curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+  - helm version
+  - pip install --upgrade awscli
+  - aws --version
+  - curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+  - chmod +x ./kubectl && sudo mv ./kubectl /usr/local/bin/kubectl
+  - kubectl version --client
+  - curl -o aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.14.6/2019-08-22/bin/linux/amd64/aws-iam-authenticator
+  - chmod +x ./aws-iam-authenticator && mkdir -p $HOME/bin && cp ./aws-iam-authenticator $HOME/bin/aws-iam-authenticator && export PATH=$PATH:$HOME/bin && echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
+  - aws-iam-authenticator help
+  - wget https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip
+  - sudo unzip terraform_0.12.24_linux_amd64.zip -d /tmp/terraform_install
+  - export PATH=$PATH:/tmp/terraform_install
+  - terraform -v
+
+before_script:
+  - cd terraform/vpc && make init && make plan && make apply && cd ../../
+  - cd terraform/eks && make init && make plan && make apply && cd ../../
+  - aws eks --region eu-west-2 update-kubeconfig --name demo-cluster
+
+script:
+  - docker build -t flask-app:latest ./app
+  - docker tag flask-app:latest $ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com/flask-app:$DEPLOY_VERSION
+  - $(aws ecr get-login --no-include-email --region eu-west-2)
+  - docker push $ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com/flask-app:$DEPLOY_VERSION
+  - helm upgrade app ./chart
+    --set deployment.flask.image.repository="$ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com/flask-app"
+    --set deployment.flask.image.tag="$DEPLOY_VERSION"
+    --set secrets.username.value="$USERNAME"
+    --set secrets.password.value="$PASSWORD"
+    --set secrets.thebigsecret.value="$BIGSECRET"
+    --set deploy.version="$DEPLOY_VERSION"
+  - echo "Deployed."

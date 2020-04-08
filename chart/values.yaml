@@ -1,6 +1,3 @@
-deploy:
-  version: 2020111
-
 namespace: demo
 
 deployment:
@@ -17,16 +14,10 @@ deployment:
 secrets:
   username:
     key: USERNAME
-    value: bob
   password:
     key: PASSWORD
-    value: "1234567890"
   thebigsecret:
     key: THEBIGSECRET
-    value: "The is a big secret"
-
-ingress:
-  allowIP: "61.220.65.15/32"
 
 
 
