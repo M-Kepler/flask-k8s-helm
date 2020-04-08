@@ -1,12 +1,26 @@
-# Simple app
-This is a simple web app that returns counter on how many times page has been seen.
-The application is using redis to store the count.
+## Providers
 
-It also has anendpoint protected by basic http auth that will provide you with a secret string.
+| Name | Version |
+|------|---------|
+| aws | ~> 2.0 |
 
-## How to start locally
-docker-compose up
+## Inputs
 
-## Endpoints
-* GET / - path shows hello message with a counter on how many time the page has been visited.
-* GET /tellmeasecret - this path requires basic http authentication and it will tell you a super secret.
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:-----:|
+| AWS\_REGION | Region | `string` | `"ap-northeast-1"` | no |
+| app\_a\_cidr | # APP\_Subnets | `any` | n/a | yes |
+| app\_b\_cidr | n/a | `any` | n/a | yes |
+| db\_a\_cidr | # DB\_Subnets | `any` | n/a | yes |
+| db\_b\_cidr | n/a | `any` | n/a | yes |
+| public\_a\_cidr | # Public Subnets | `any` | n/a | yes |
+| public\_b\_cidr | n/a | `any` | n/a | yes |
+| redis\_a\_cidr | # Redis\_Subnets | `any` | n/a | yes |
+| redis\_b\_cidr | n/a | `any` | n/a | yes |
+| vpc\_cidr | VPC CIDR | `any` | n/a | yes |
+| vpc\_name | VPC Name | `any` | n/a | yes |
+
+## Outputs
+
+No output.
+
