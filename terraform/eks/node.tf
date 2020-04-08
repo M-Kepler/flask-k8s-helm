@@ -1,7 +1,3 @@
-locals {
-    datetime = formatdate("YYYYMMDDhhmm", timeadd(timestamp(), "24h"))
-}
-
 module "node_group" {
     source = "../modules/node_group"
 
@@ -9,7 +5,11 @@ module "node_group" {
     cluster_name = var.cluster_name
 
     node_role_arn = aws_iam_role.eks_instance_role.arn
-    subnet_ids = [data.terraform_remote_state.vpc.outputs.subnet_app_a_id, data.terraform_remote_state.vpc.outputs.subnet_app_b_id]
+    subnet_ids = [
+        data.terraform_remote_state.vpc.outputs.subnet_app_a_id,
+        data.terraform_remote_state.vpc.outputs.subnet_app_b_id,
+        data.terraform_remote_state.vpc.outputs.subnet_app_c_id
+    ]
 
     ## This SG assigns only for "which SG could ACCESS nodes from 22 port". Normally we will given a SG which allows all internal traffic.
     security_group_ids = [data.terraform_remote_state.vpc.outputs.office_sg_id]
