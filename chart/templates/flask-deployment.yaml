@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-flask
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Release.Name }}-flask
+spec:
+  replicas: {{ .Values.deployment.flask.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-flask
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-flask
+    spec:
+      containers:
+        - name: flask
+          image: "{{ .Values.deployment.flask.image.repository }}:{{ .Values.deployment.flask.image.tag }}"
+          imagePullPolicy: Always
+          env:
+          - name: DEPLOY_VERSION
+            value: "{{ .Values.deploy.version }}"
+          - name: REDIS_HOST
+            value: "{{ .Release.Name }}-redis"
+          - name: REDIS_PORT
+            value: "{{ .Values.deployment.redis.port }}"
+          - name: USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: "{{ .Release.Name }}-secret"
+                key: "{{ .Values.secrets.username.key }}"
+          - name: PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: "{{ .Release.Name }}-secret"
+                key: "{{ .Values.secrets.password.key }}"
+          - name: THEBIGSECRET
+            valueFrom:
+              secretKeyRef:
+                name: "{{ .Release.Name }}-secret"
+                key: "{{ .Values.secrets.thebigsecret.key }}"
+          ports:
+            - containerPort: 5000
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
