@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-flask
+  namespace: {{ .Values.namespace }}
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/security-group-inbound-cidrs: {{ .Values.ingress.allowIP }}
+    alb.ingress.kubernetes.io/healthcheck-path: {{ .Values.deployment.flask.health_path }}
+  labels:
+    app: {{ .Release.Name }}-flask
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /*
+            backend:
+              serviceName: {{ .Release.Name }}-flask
+              servicePort: 80
