@@ -43,4 +43,5 @@ script:
     --set secrets.username.value=$USERNAME
     --set secrets.password.value=$PASSWORD
     --set secrets.thebigsecret.value=$BIGSECRET
+    --ser deploy.version=$DEPLOY_VERSION
   - echo "Deployed."

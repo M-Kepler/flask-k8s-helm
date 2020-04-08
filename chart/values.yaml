@@ -1,6 +1,3 @@
-deploy:
-  version: 2020111
-
 namespace: demo
 
 deployment:
