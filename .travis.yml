@@ -32,8 +32,8 @@ before_script:
   - aws eks --region eu-west-2 update-kubeconfig --name demo-cluster
 
 script:
-  - docker build -t flask ./app
-  - docker tag flask-app $ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com/flask-app:$DEPLOY_VERSION
+  - docker build -t flask-app:latest ./app
+  - docker tag flask-app:latest $ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com/flask-app:$DEPLOY_VERSION
   - $(aws ecr get-login --no-include-email --region eu-west-2)
   - docker push $ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com/flask-app:$DEPLOY_VERSION
 #  - helm upgrade app ./chart --dry-run --debug --set xxxxx
