@@ -9,8 +9,10 @@ resource "aws_eks_cluster" "main" {
     subnet_ids              = [
       data.terraform_remote_state.vpc.outputs.subnet_public_a_id,
       data.terraform_remote_state.vpc.outputs.subnet_public_b_id,
+      data.terraform_remote_state.vpc.outputs.subnet_public_c_id,
       data.terraform_remote_state.vpc.outputs.subnet_app_a_id,
-      data.terraform_remote_state.vpc.outputs.subnet_app_b_id
+      data.terraform_remote_state.vpc.outputs.subnet_app_b_id,
+      data.terraform_remote_state.vpc.outputs.subnet_app_c_id
     ]
     endpoint_private_access = var.endpoint_private_access
     endpoint_public_access  = var.endpoint_public_access
@@ -22,10 +24,18 @@ resource "aws_eks_cluster" "main" {
       aws_iam_role_policy_attachment.amazon_eks_service_policy,
       aws_cloudwatch_log_group.cluster
   ]
+
+  lifecycle {
+    ignore_changes = [ name ]
+  }
 }
 
 ## Group Name Cannot Be Changed.
 resource "aws_cloudwatch_log_group" "cluster" {
     name = "/aws/eks/${var.cluster_name}/cluster"
     retention_in_days = 7
+}
+
+output "cluster_name" {
+  value = aws_eks_cluster.main.name
 }

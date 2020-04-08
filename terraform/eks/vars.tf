@@ -1,3 +1,7 @@
+locals {
+    datetime = formatdate("YYYYMMDDhhmm", timeadd(timestamp(), "24h"))
+}
+
 variable "AWS_REGION" {
     default = "eu-west-2"
 }
