@@ -93,7 +93,7 @@ make apply
 The EKS cluster and related resources are all created by Terraform.
 The Terraform project contains `EKS Cluster`, `Node Group`, `IAM Roles/Policies`, `ECR` and `OIDC & IRSA`.
 
-![arc](https://live.staticflickr.com/65535/49715657891_23558e7f5d_k.jpg)
+![arc](https://live.staticflickr.com/65535/49751615113_ff81d31f5c_k.jpg)
 
 ```bash
 ## Go into the EKS project directory.
@@ -115,7 +115,6 @@ On the `eks-addons` this directory, we are going to install some of the followin
 - EKS Admin ServiceAccount
 - ALB Ingress Controller
 - Cluster Autoscaler (CA)
-- Weave Scope
 
 
 ## Helm Chart
