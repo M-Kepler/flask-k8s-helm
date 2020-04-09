@@ -64,10 +64,6 @@ Even though it's not a perfect way to deal with secret, it works well.
 I think the perfect way is to store the secret in some kind of `secret management system` such as `SSM Parameter Store` and modify the code to retrieve the secrets on the container runtime to avoid leaking.
 
 
-## Terraform
-All of `tfstate` are store in `S3` which created on `state-s3` this project.  
-
-
 ## Helm Chart
 We are using Helm to deploy the application and `--set` to specify the variable.
 Of course, you can also use `-f values.yaml` instead.
@@ -97,6 +93,10 @@ helm upgrade app ./chart \
 ## If you just want to check the result first.
 helm upgrade app ./chart ...(skip) --dry-run --debug
 ```
+
+
+## Terraform
+All of `tfstate` are store in `S3` which created on `state-s3` this project.  
 
 
 ### VPC
