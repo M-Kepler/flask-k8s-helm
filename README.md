@@ -18,8 +18,11 @@ aws-vault exec deleteit -- make init && make plan
 
 
 ## How To Access EKS
-The EKS cluster integrated with IAM to manage cluster user, so let's stick to the best practice to create a IAM user to access the cluster.
-After the user created, we have to add it to ConfigMap by `kubectl edit configmap/aws-auth -n kube-system`.
+EKS uses IAM to provide authentication to your Kubernetes cluster, via the `aws eks get-token` or `AWS IAM Authenticator fro Kubernetes`.
+But it still relies on the RBAC which native on Kubernetes.  
+
+To follow the best practices of EKS, let's stick to use IAM user to access the cluster. 
+After the user created, we will also have to add it on the ConfigMap by `kubectl edit configmap/aws-auth -n kube-system`.
 Check the official documentation below. 
 
 [AWS - Managing Users or IAM Roles for your Cluster](https://docs.aws.amazon.com/eks/latest/userguide/add-user-role.html) 
