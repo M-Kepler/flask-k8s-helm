@@ -5,7 +5,7 @@ resource "aws_eks_cluster" "main" {
   enabled_cluster_log_types = var.enabled_cluster_log_types
 
   vpc_config {
-    security_group_ids      = [ aws_security_group.master.id, data.terraform_remote_state.vpc.outputs.office_sg_id ]
+    security_group_ids      = [ aws_security_group.master.id ]
     subnet_ids              = [
       data.terraform_remote_state.vpc.outputs.subnet_public_a_id,
       data.terraform_remote_state.vpc.outputs.subnet_public_b_id,

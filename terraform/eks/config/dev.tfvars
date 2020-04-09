@@ -12,9 +12,9 @@ public_access_cidrs = [ "0.0.0.0/0" ]
 
 
 ## EKS Node Group
-node_desired_capacity = 5
-node_max_capacity = 9
-node_min_capacity = 3
+node_desired_capacity = 2
+node_max_capacity = 4
+node_min_capacity = 2
 
 
 ## Node Group Instance

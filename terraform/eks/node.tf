@@ -12,7 +12,7 @@ module "node_group" {
     ]
 
     ## This SG assigns only for "which SG could ACCESS nodes from 22 port". Normally we will given a SG which allows all internal traffic.
-    security_group_ids = [data.terraform_remote_state.vpc.outputs.office_sg_id]
+    security_group_ids = [aws_security_group.node.id]
 
     desired_capacity = var.node_desired_capacity
     max_capacity = var.node_max_capacity

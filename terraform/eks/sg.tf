@@ -39,3 +39,40 @@ resource "aws_security_group_rule" "master_ingress_vpc" {
   security_group_id        = aws_security_group.master.id
   type                     = "ingress"
 }
+
+
+## ============================== Node ======================================
+resource "aws_security_group" "node" {
+  name        = "${var.cluster_name}-EKS-Node-SG"
+  description = "Security Group for EKS Node"
+  vpc_id      = data.terraform_remote_state.vpc.outputs.vpc_id
+  tags        = {
+    Name = "${var.cluster_name}-eks-node-sg"
+    "kubernetes.io/cluster/${var.cluster_name}" = "owned"
+  }
+}
+
+## ====Outbound====
+## Outbound allows all
+resource "aws_security_group_rule" "node_egress" {
+  description       = "Allow all egress traffic"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.node.id
+  type              = "egress"
+}
+
+
+## ====Inbound====
+## Inbound allows for whole VPC
+resource "aws_security_group_rule" "node_ingress_vpc" {
+  description              = "Allow internal traffic"
+  from_port                = 0
+  to_port                  = 65535
+  protocol                 = "-1"
+  cidr_blocks              = ["0.0.0.0/0"]
+  security_group_id        = aws_security_group.node.id
+  type                     = "ingress"
+}
