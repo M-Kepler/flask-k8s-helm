@@ -33,10 +33,3 @@ ansible-playbook install_alb_ingress_controller.yml
 
 ```
 
-
-## Weave Scope - Monitoring, Visualisation Tool
-
-```bash
-ansible-playbook install_weave_scope.yml
-
-```
