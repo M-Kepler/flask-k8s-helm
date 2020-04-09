@@ -19,7 +19,7 @@ node_min_capacity = 3
 
 ## Node Group Instance
 node_disk_size = 20
-node_instance_type = "t2.micro"
+node_instance_type = "t3.medium"
 
 
 ## Key Pair Name
