@@ -49,7 +49,7 @@ SSH with keychain to bastion instance to access the internal resources.
 ### Flask Ingress
 We can get the ALB address by `kubectl`.
 ```bash
-kubectl get ingress -n demo
+kubectl get ingress -n demo -o=jsonpath="{..status.loadBalancer.ingress[0].hostname}"
 ```
 
 ### All Resources About App
@@ -63,12 +63,40 @@ The secrets will be injected on the CI/CD steps as a secured environ variable.
 Even though it's not a perfect way to deal with secret, it works well.
 I think the perfect way is to store the secret in some kind of `secret management system` such as `SSM Parameter Store` and modify the code to retrieve the secrets on the container runtime to avoid leaking.
 
-### Health Check
-A health page for the Flask application -- `/health`, it will return a JSON to show the build version.
-
 
 ## Terraform
 All of `tfstate` are store in `S3` which created on `state-s3` this project.  
+
+
+## Helm Chart
+We are using Helm to deploy the application and `--set` to specify the variable.
+Of course, you can also use `-f values.yaml` instead.
+
+This Helm Chart contains `Flask Deployment / Service / Ingress / Secrets` and `Redis Deployment / Service` as well as a `namespace`.
+
+
+```bash
+## First time to install the chart.
+helm install app ./chart \
+    --set deployment.flask.image.repository=$ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com/flask-app \
+    --set deployment.flask.image.tag=$DEPLOY_VERSION \
+    --set secrets.username.value=$USERNAME \
+    --set secrets.password.value=$PASSWORD \ 
+    --set secrets.thebigsecret.value=$BIGSECRET \
+    --set deploy.version=$DEPLOY_VERSION
+
+## To Upgrade the chart (deploy/release)
+helm upgrade app ./chart \
+    --set deployment.flask.image.repository=$ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com/flask-app \
+    --set deployment.flask.image.tag=$DEPLOY_VERSION \
+    --set secrets.username.value=$USERNAME \
+    --set secrets.password.value=$PASSWORD \ 
+    --set secrets.thebigsecret.value=$BIGSECRET \
+    --set deploy.version=$DEPLOY_VERSION
+
+## If you just want to check the result first.
+helm upgrade app ./chart ...(skip) --dry-run --debug
+```
 
 
 ### VPC
@@ -117,37 +145,6 @@ On the `eks-addons` this directory, we are going to install some of the followin
 - Cluster Autoscaler (CA)
 
 
-## Helm Chart
-We are using Helm to deploy the application and `--set` to specify the variable.
-Of course, you can also use `-f values.yaml` instead.
-
-This Helm Chart contains `Flask Deployment / Service / Ingress / Secrets` and `Redis Deployment / Service` as well as a `namespace`.
-
-
-```bash
-## First time to install the chart.
-helm install app ./chart \
-    --set deployment.flask.image.repository=$ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com/flask-app \
-    --set deployment.flask.image.tag=$DEPLOY_VERSION \
-    --set secrets.username.value=$USERNAME \
-    --set secrets.password.value=$PASSWORD \ 
-    --set secrets.thebigsecret.value=$BIGSECRET \
-    --set deploy.version=$DEPLOY_VERSION
-
-## To Upgrade the chart (deploy/release)
-helm upgrade app ./chart \
-    --set deployment.flask.image.repository=$ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com/flask-app \
-    --set deployment.flask.image.tag=$DEPLOY_VERSION \
-    --set secrets.username.value=$USERNAME \
-    --set secrets.password.value=$PASSWORD \ 
-    --set secrets.thebigsecret.value=$BIGSECRET \
-    --set deploy.version=$DEPLOY_VERSION
-
-## If you just want to check the result first.
-helm upgrade app ./chart ...(skip) --dry-run --debug
-```
-
-
 ## CI / CD
 `Travis CI` is my choice, and it's a quite simple tool to deploy a simple application.
 All of the details are in `.travis.yml`.
@@ -158,4 +155,5 @@ docker-compose up
 
 ## Endpoints
 * GET / - path shows hello message with a counter on how many time the page has been visited.
-* GET /tellmeasecret - this path requires basic http authentication and it will tell you a super secret.
+* GET /spersecret - this path requires basic http authentication and it will tell you a super secret.
+* GET /health - health check page.
