@@ -1,4 +1,4 @@
-![build](https://travis-ci.org/davidh83110/flask-k8s.svg?branch=master)
+[![Build Status](https://travis-ci.org/davidh83110/flask-k8s.svg?branch=master)](https://travis-ci.org/davidh83110/flask-k8s)
 
 # Simple app
 This is a simple web app that returns counter on how many times page has been seen.
