@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/davidh83110/flask-k8s.svg?branch=master)](https://travis-ci.org/davidh83110/flask-k8s)
 
-# Simple app
+# Flask K8S Helm
 This is a simple web app that returns counter on how many times page has been seen.
 The application is using redis to store the count.
 
