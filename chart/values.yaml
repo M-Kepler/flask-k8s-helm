@@ -1,6 +1,7 @@
 namespace: demo
 
 deployment:
+  version: 0.0.1
   redis:
     replicaCount: 1
     port: 6379
@@ -10,7 +11,7 @@ deployment:
       repository: davidh83110/flask-test
       tag: latest
     health_path: /health
-  
+
 secrets:
   username:
     key: USERNAME

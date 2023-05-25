@@ -20,27 +20,27 @@ spec:
           image: "{{ .Values.deployment.flask.image.repository }}:{{ .Values.deployment.flask.image.tag }}"
           imagePullPolicy: Always
           env:
-          - name: DEPLOY_VERSION
-            value: "{{ .Values.deploy.version }}"
-          - name: REDIS_HOST
-            value: "{{ .Release.Name }}-redis"
-          - name: REDIS_PORT
-            value: "{{ .Values.deployment.redis.port }}"
-          - name: USERNAME
-            valueFrom:
-              secretKeyRef:
-                name: "{{ .Release.Name }}-secret"
-                key: "{{ .Values.secrets.username.key }}"
-          - name: PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: "{{ .Release.Name }}-secret"
-                key: "{{ .Values.secrets.password.key }}"
-          - name: THEBIGSECRET
-            valueFrom:
-              secretKeyRef:
-                name: "{{ .Release.Name }}-secret"
-                key: "{{ .Values.secrets.thebigsecret.key }}"
+            - name: DEPLOY_VERSION
+              value: "{{ .Values.deployment.version }}"
+            - name: REDIS_HOST
+              value: "{{ .Release.Name }}-redis" # 可以像 docker-compose 那样，直接访问容器
+            - name: REDIS_PORT
+              value: "{{ .Values.deployment.redis.port }}"
+            - name: USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: "{{ .Release.Name }}-secret"
+                  key: "{{ .Values.secrets.username.key }}"
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: "{{ .Release.Name }}-secret"
+                  key: "{{ .Values.secrets.password.key }}"
+            - name: THEBIGSECRET
+              valueFrom:
+                secretKeyRef:
+                  name: "{{ .Release.Name }}-secret"
+                  key: "{{ .Values.secrets.thebigsecret.key }}"
           ports:
             - containerPort: 5000
           resources:

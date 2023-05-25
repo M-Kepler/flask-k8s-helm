@@ -1,3 +1,5 @@
+# -*- coding:utf-8 -*-
+
 import time
 import os
 
@@ -8,12 +10,15 @@ from flask_basicauth import BasicAuth
 
 
 app = Flask(__name__)
-cache = redis.Redis(host=os.environ['REDIS_HOST'], port=os.environ['REDIS_PORT'])
+cache = redis.Redis(
+    host=os.environ['REDIS_HOST'],
+    port=os.environ['REDIS_PORT'])
 
 app.config['BASIC_AUTH_USERNAME'] = os.environ['USERNAME']
 app.config['BASIC_AUTH_PASSWORD'] = os.environ['PASSWORD']
 
 basic_auth = BasicAuth(app)
+
 
 def get_hit_count():
     retries = 5
@@ -32,11 +37,12 @@ def hello():
     count = get_hit_count()
     return 'Hello World! I have been seen {} times.\n'.format(count)
 
+
 @app.route('/supersecret')
 @basic_auth.required
 def secret_view():
-    count = get_hit_count()
-    return os.environ['THEBIGSECRET']+ '\n'
+    return os.environ['THEBIGSECRET'] + '\n'
+
 
 @app.route('/health')
 def health_check():
